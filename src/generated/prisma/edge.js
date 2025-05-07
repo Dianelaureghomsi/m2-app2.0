@@ -190,7 +190,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\User HP\\m2-app2.0\\src\\generated\\prisma",
+      "value": "C:\\Users\\User HP\\Desktop\\m2-app\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -199,7 +199,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       },
       {
@@ -226,7 +226,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "NEXT_DATABASE_URL",
-        "value": "postgresql://m2_owner:npg_lnhB4Ji3mWqX@ep-winter-dew-a2f1c5we-pooler.eu-central-1.aws.neon.tech/m2?"
+        "value": "postgresql://postgres:root@localhost:5432/m2_app;?schema=public"
       }
     }
   },

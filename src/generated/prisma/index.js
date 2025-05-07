@@ -200,7 +200,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       },
       {
@@ -227,7 +227,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "NEXT_DATABASE_URL",
-        "value": "postgresql://m2_owner:npg_lnhB4Ji3mWqX@ep-winter-dew-a2f1c5we-pooler.eu-central-1.aws.neon.tech/m2?"
+        "value": "postgresql://postgres:root@localhost:5432/m2_app;?schema=public"
       }
     }
   },
@@ -271,8 +271,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
