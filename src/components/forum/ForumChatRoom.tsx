@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export interface ForumMessage {
   id: number;
@@ -18,6 +18,29 @@ export function ForumChatRoom() {
   const [history, setHistory] = useState<ForumMessage[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const data = await fetch(`/api/messages`);
+      const fetchedHistory = await data.json();
+      console.log("fetched history: ", fetchedHistory);
+      const currentUser = JSON.parse(
+        localStorage.getItem("auth_user") as string
+      );
+      const forumMessage: ForumMessage[] = fetchedHistory.map((msg: any) => ({
+        id: msg.id,
+        content: msg.content,
+        fileName: msg.filePath.split("/")[2],
+        fileUrl: msg.filePath,
+        sender: msg.sender.fullname,
+        createdAt: msg.createdAt,
+      }));
+
+      setHistory(forumMessage);
+    };
+
+    fetchMessages();
+  }, []);
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
@@ -27,7 +50,7 @@ export function ForumChatRoom() {
       formData.append("file", file);
     }
     const currentUser = localStorage.getItem("auth_user");
-    const newMsg: ForumMessage = {
+    let newMsg: ForumMessage = {
       id: history.length + 1,
       content: message,
       fileUrl: fileUrl || undefined,
@@ -44,7 +67,8 @@ export function ForumChatRoom() {
     });
     const uploadJson = await uploadRes.json();
     fileUrl = uploadJson.url;
-
+    newMsg.sender = JSON.parse(currentUser as string)?.fullname;
+    newMsg.fileUrl = uploadJson.url;
     setSentFileUrl(fileUrl);
     setHistory([newMsg, ...history]);
     setMessage("");
@@ -124,7 +148,7 @@ export function ForumChatRoom() {
                   rel="noopener noreferrer"
                   className="text-blue-600 underline text-sm"
                 >
-                  📎 Télécharger : {msg.fileName}
+                  📎 Télécharger : {/*msg.fileName*/}
                 </a>
               )}
               <div className="text-xs text-gray-500 mt-1">
