@@ -33,6 +33,9 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     const messages = await prisma.message.findMany({
+      orderBy: {
+        createdAt: "desc", // pour afficher les plus récents d'abord
+      },
       include: {
         sender: true, // Inclure les informations sur l'expéditeur
       },
